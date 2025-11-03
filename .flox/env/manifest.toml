@@ -194,6 +194,7 @@ echo "Starting Colima profile: $COLIMA_PROFILE"
 echo "Configuration: ${COLIMA_CPU}CPU, ${COLIMA_MEMORY}GB RAM, ${COLIMA_DISK}GB disk"
 
 # Start Colima with configuration from environment variables
+# --foreground keeps it running in the foreground
 colima start \
   --cpu "$COLIMA_CPU" \
   --memory "$COLIMA_MEMORY" \
@@ -202,11 +203,7 @@ colima start \
   --runtime "$COLIMA_RUNTIME" \
   --vm-type "$COLIMA_VM_TYPE" \
   --profile "$COLIMA_PROFILE" \
-  --foreground &
-
-colima_pid=$!
-trap "kill $colima_pid 2>/dev/null" EXIT TERM INT
-wait $colima_pid
+  --foreground
 '''
 colima.is-daemon = false
 colima.shutdown.command = "colima stop --profile $COLIMA_PROFILE"
